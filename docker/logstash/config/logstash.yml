@@ -1,0 +1,6 @@
+http.host: "0.0.0.0"
+
+queue.type: persisted
+path.queue: "/usr/share/logstash/data/queue"
+queue.max_bytes: 1024mb
+queue.checkpoint.writes: 1024

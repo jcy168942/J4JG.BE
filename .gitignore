@@ -2,7 +2,7 @@
 .env
 HELP.md
 
-logstash/logdata/
+docker/logstash/logdata/
 
 ### GRADLE ###
 .gradle/

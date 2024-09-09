@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.14.1
+    container_name: logstash
+    volumes:
+      - ../logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ../logstash/config/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+      - ${LOGSTASH_JOBINFO_LOGFILE}:/usr/share/logstash/logdata/jobinfo/jobinfo.log:ro
+      - ../logstash/data/queue:/usr/share/logstash/data/queue  # 큐 데이터 저장 경로 마운트
+      - ../logstash/data/sincedb:/usr/share/logstash/data/sincedb  # sincedb 데이터 마운트
+    environment:
+      - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
+      - ELASTICSEARCH_PORT=${ELASTICSEARCH_PORT}
+    ports:
+      - "9600:9600"

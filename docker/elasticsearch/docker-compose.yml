@@ -4,7 +4,7 @@ services:
   elasticsearch-master:
     container_name: elasticsearch-master
     build:
-      context: ./elasticsearch/.
+      context: elasticsearch
       args:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
     environment:
@@ -31,7 +31,7 @@ services:
   elasticsearch-node1:
     container_name: elasticsearch-node1
     build:
-      context: ./elasticsearch/.
+      context: elasticsearch
       args:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
     environment:
@@ -58,7 +58,7 @@ services:
   elasticsearch-node2:
     container_name: elasticsearch-node2
     build:
-      context: ./elasticsearch/.
+      context: elasticsearch
       args:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
     environment:
@@ -79,22 +79,6 @@ services:
     ports:
       - "9202:9200"
       - "9302:9300"
-    networks:
-      - elk
-
-  logstash:
-    image: docker.elastic.co/logstash/logstash:8.14.1
-    container_name: logstash
-    volumes:
-      - ../logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
-      - ../logstash/config/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
-      - ${LOGSTASH_JOBINFO_LOGFILE}:/usr/share/logstash/logdata/jobinfo/jobinfo.log:ro
-      - ${LOGSTASH_NEWS_LOGFILE}:/usr/share/logstash/logdata/news/news.log:ro
-    environment:
-      - ELASTICSEARCH_HOST=elasticsearch-master
-      - ELASTICSEARCH_PORT=9200
-    ports:
-      - "9600:9600"
     networks:
       - elk
 
